@@ -30,9 +30,9 @@ jobs:
         uses: azure/container-apps-deploy-action@v1
         with:
           appSourcePath: ${{ github.workspace }} 
-          registryUrl: snehaparacr.azurecr.io
-          registryUsername: ${{ secrets.CAPPSNEHAPARSAMPLEREPO4_REGISTRY_USERNAME }}
-          registryPassword: ${{ secrets.CAPPSNEHAPARSAMPLEREPO4_REGISTRY_PASSWORD }}
+          registryUrl: snehapar9.docker.io
+          registryUsername: ${{ secrets.DOCKER_USERNAME }}
+          registryPassword: ${{ secrets.DOCKER_PASSWORD }}
           containerAppName: capp-snehapar-sample-repo4
           resourceGroup: ca-snehapar-group
           imageToBuild: snehaparacr.azurecr.io/capp-snehapar-sample-repo4:${{ github.sha }}
