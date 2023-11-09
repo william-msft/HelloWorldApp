@@ -40,7 +40,7 @@ jobs:
         run: az extension add --source '${{ github.workspace }}/azure-cli-extensions/containerapp-0.3.43-py2.py3-none-any.whl' --yes
 
       - name: Build and push container image to registry
-        uses: azure/container-apps-deploy-action@821a725dfc50d5dc5b7604ce196a2d2843f5f219
+        uses: azure/container-apps-deploy-action@572e093213a109db0818c762013bac8675e68f83
         with:
           appSourcePath: ${{ github.workspace }} 
           registryUrl: 
@@ -48,7 +48,7 @@ jobs:
           registryPassword: ${{ secrets.CAPPTESTSAMPLE105_REGISTRY_PASSWORD }}
           containerAppName: capp-test-sample105
           resourceGroup: ca-snehapar-group
-          imageToBuild: default/[parameters('containerAppName')]:${{ github.sha }}
+          
           
 
 
