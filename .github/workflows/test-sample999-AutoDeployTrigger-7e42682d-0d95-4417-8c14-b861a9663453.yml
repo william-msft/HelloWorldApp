@@ -30,15 +30,6 @@ jobs:
           tenant-id: ${{ secrets.TESTSAMPLE999_AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.TESTSAMPLE999_AZURE_SUBSCRIPTION_ID }}
 
-      - name: Clone azure-cli-extensions repo
-        uses: actions/checkout@v3
-        with:
-          repository: snehapar9/azure-cli-extensions
-          path: azure-cli-extensions
-          
-      - name: Install latest azure-cli-extensions wheel
-        run: az extension add --source '${{ github.workspace }}/azure-cli-extensions/containerapp-0.3.43-py2.py3-none-any.whl' --yes
-
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@be9f91dbb2ada9712b7dd4fc2306aa05f12e39e3
         with:
