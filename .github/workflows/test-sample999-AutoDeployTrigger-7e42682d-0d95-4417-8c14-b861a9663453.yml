@@ -33,7 +33,7 @@ jobs:
       - name: Clone azure-cli-extensions repo
         uses: actions/checkout@v3
         with:
-          repository: snehapar9/azure-cli-extensions
+          repository: snehapar9/test
           path: azure-cli-extensions
           
       - name: Install latest azure-cli-extensions wheel
