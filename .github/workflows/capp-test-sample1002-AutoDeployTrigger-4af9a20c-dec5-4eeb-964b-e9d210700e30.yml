@@ -1,0 +1,45 @@
+name: Trigger auto deployment for capp-test-sample1002
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/capp-test-sample1002-AutoDeployTrigger-4af9a20c-dec5-4eeb-964b-e9d210700e30.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.CAPPTESTSAMPLE1002_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.CAPPTESTSAMPLE1002_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.CAPPTESTSAMPLE1002_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }} 
+          registryUrl: 
+          registryUsername: ${{ secrets.CAPPTESTSAMPLE1002_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.CAPPTESTSAMPLE1002_REGISTRY_PASSWORD }}
+          containerAppName: capp-test-sample1002
+          resourceGroup: ca-snehapar-group
+          imageToBuild: default/[parameters('containerAppName')]:${{ github.sha }}
+          
+
+
