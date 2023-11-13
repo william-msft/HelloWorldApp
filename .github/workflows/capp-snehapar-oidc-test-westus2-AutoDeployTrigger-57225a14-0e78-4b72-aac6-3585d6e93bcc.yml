@@ -29,17 +29,9 @@ jobs:
           client-id: ${{ secrets.CAPPSNEHAPAROIDCTESTWESTUS2_AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.CAPPSNEHAPAROIDCTESTWESTUS2_AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.CAPPSNEHAPAROIDCTESTWESTUS2_AZURE_SUBSCRIPTION_ID }}
-      - name: Clone azure-cli-extensions repo
-        uses: actions/checkout@v3
-        with:
-          repository: snehapar9/test
-          path: azure-cli-extensions
-          
-      - name: Install latest azure-cli-extensions wheel
-        run: az extension add --source '${{ github.workspace }}/azure-cli-extensions/containerapp-0.3.43-py2.py3-none-any.whl' --yes
 
       - name: Build and push container image to registry
-        uses: azure/container-apps-deploy-action@545e142e7cd5c71138c372adeaaa6661bb60d291
+        uses: azure/container-apps-deploy-action@ecc33566f4fffe724c058129e9760a68c5c43ad2
         with:
           appSourcePath: ${{ github.workspace }} 
           registryUrl: 
