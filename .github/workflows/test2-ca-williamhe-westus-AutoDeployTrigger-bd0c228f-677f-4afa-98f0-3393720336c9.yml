@@ -1,0 +1,45 @@
+name: Trigger auto deployment for test2-ca-williamhe-westus
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/test2-ca-williamhe-westus-AutoDeployTrigger-bd0c228f-677f-4afa-98f0-3393720336c9.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.TEST2CAWILLIAMHEWESTUS_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.TEST2CAWILLIAMHEWESTUS_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.TEST2CAWILLIAMHEWESTUS_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }} 
+          registryUrl: 
+          registryUsername: ${{ secrets.TEST2CAWILLIAMHEWESTUS_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.TEST2CAWILLIAMHEWESTUS_REGISTRY_PASSWORD }}
+          containerAppName: test2-ca-williamhe-westus
+          resourceGroup: oryx-williamhe
+          imageToBuild: default/[parameters('containerAppName')]:${{ github.sha }}
+          
+
+
