@@ -36,7 +36,7 @@ jobs:
         with:
           appSourcePath: ${{ github.workspace }}
           _dockerfilePathKey_: _dockerfilePath_
-          targetLabel: mylabel4
+          _targetLabelKey_: _targetLabel_
           registryUrl: acatestregistry.azurecr.io
           registryUsername: ${{ secrets.CAWILLIAMHEAPP_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.CAWILLIAMHEAPP_REGISTRY_PASSWORD }}
